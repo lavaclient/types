@@ -1,0 +1,12 @@
+/src
+/node_modules
+/.idea
+
+tsconfig.json
+tsconfig.tsbuildinfo
+
+.gitignore
+
+*.lock
+*.env
+
