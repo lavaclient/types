@@ -8,7 +8,7 @@ export enum Filter {
   Tremolo = "tremolo",
   Vibrato = "vibrato",
   Rotation = "rotation",
-  Distortion = "Distortion"
+  Distortion = "distortion"
 }
 
 /**
@@ -71,11 +71,7 @@ export interface RotationFilter {
 /**
  *
  */
-export interface DistortionFilter {
-  sinOffset: number;
-  sinScale: number;
-  cosOffset: number;
-  cosScale: number;
-  tanOffset: number;
-  tanScale: number;
-}
+export type DistortionFilter = Record<`${SOHCAHTOA}${"Scale" | "Offset"}` | "offset" | "scale", number>;
+
+type SOHCAHTOA = "tan" | "cos" | "sin";
+ 
