@@ -1,5 +1,5 @@
 import type { OpCode } from "./protocol";
-import type { PlayerUpdate, TrackEndEvent, TrackExceptionEvent, TrackStartEvent, TrackStuckEvent } from "./player";
+import type { PlayerUpdate, TrackEndEvent, TrackExceptionEvent, TrackStartEvent, TrackStuckEvent, WebSocketClosedEvent } from "./player";
 import type {
   DistortionFilter,
   EqualizerFilter,
@@ -21,7 +21,7 @@ export type Message<O extends OpCode, D> = { op: O } & D;
 /**
  *
  */
-export type PlayerMessage<O extends OpCode, D = {}> = Message<O, { guildId: string } & D>;
+export type PlayerMessage<O extends OpCode, D = unknown> = Message<O, { guildId: string } & D>;
 
 /**
  * All types of messages.
@@ -36,7 +36,7 @@ export type IncomingMessage = PlayerEvent | PlayerUpdate | Stats;
 /**
  * Outgoing messages.
  */
-export type OutgoingMessage = Filters | Play | Stop | Seek | Destroy | Volume | Pause | VoiceUpdate;
+export type OutgoingMessage = Filters | Play | Stop | Seek | Destroy | Volume | Pause | VoiceUpdate | ConfigureResuming | Equalizer;
 
 
 /**
@@ -44,7 +44,7 @@ export type OutgoingMessage = Filters | Play | Stop | Seek | Destroy | Volume | 
  */
 export type Filters = PlayerMessage<"filters", Partial<FilterData>>;
 
-export interface FilterData {
+export type FilterData = {
   [Filter.Volume]: VolumeFilter;
   [Filter.Equalizer]: EqualizerFilter;
   [Filter.Karaoke]: KaraokeFilter;
@@ -55,11 +55,10 @@ export interface FilterData {
   [Filter.Distortion]: DistortionFilter;
 }
 
-
 /**
  * An event related to an audio player.
  */
-export type PlayerEvent = TrackStartEvent | TrackEndEvent | TrackStuckEvent | TrackExceptionEvent;
+export type PlayerEvent = TrackStartEvent | TrackEndEvent | TrackStuckEvent | TrackExceptionEvent | WebSocketClosedEvent;
 
 /**
  * Payload for providing an intercepted voice server & state update
@@ -88,6 +87,26 @@ export interface PlayData {
   volume?: number;
   noReplace?: boolean;
   pause?: boolean;
+}
+
+/**
+ * Configures the equalizer.
+ * @deprecated in v4, use the filters api.
+ */
+export type Equalizer = PlayerMessage<"equalizer", EqualizerData>;
+
+export interface EqualizerData {
+  bands: EqualizerFilter;
+}
+
+/**
+ * Configures resuming for this session.
+ */
+export type ConfigureResuming = Message<"configureResuming", ConfigureResumingData>;
+
+export interface ConfigureResumingData {
+  key: string;
+  timeout: number;
 }
 
 /**
