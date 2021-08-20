@@ -38,9 +38,10 @@ export type EncodedTrack = string;
  *
  */
 type Response<T extends LoadType, D = {}> = {
-  loadType: T;
-  playlistInfo: PlaylistInfo;
-  tracks: Track[];
+    loadType: T;
+    playlistInfo: PlaylistInfo;
+    tracks: Track[];
+    exception?: FriendlyException;
 } & D;
 
 /**
