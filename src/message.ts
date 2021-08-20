@@ -1,15 +1,22 @@
 import type { OpCode } from "./protocol";
-import type { PlayerUpdate, TrackEndEvent, TrackExceptionEvent, TrackStartEvent, TrackStuckEvent, WebSocketClosedEvent } from "./player";
 import type {
-  DistortionFilter,
-  EqualizerFilter,
-  Filter,
-  KaraokeFilter,
-  RotationFilter,
-  TimescaleFilter,
-  TremoloFilter,
-  VibratoFilter,
-  VolumeFilter,
+    PlayerUpdate,
+    TrackEndEvent,
+    TrackExceptionEvent,
+    TrackStartEvent,
+    TrackStuckEvent,
+    WebSocketClosedEvent
+} from "./player";
+import type {
+    DistortionFilter,
+    EqualizerFilter,
+    Filter,
+    KaraokeFilter,
+    RotationFilter,
+    TimescaleFilter,
+    TremoloFilter,
+    VibratoFilter,
+    VolumeFilter,
 } from "./filters";
 import type { CPUStats, FrameStats, MemoryStats } from "./stats";
 
@@ -36,8 +43,12 @@ export type IncomingMessage = PlayerEvent | PlayerUpdate | Stats;
 /**
  * Outgoing messages.
  */
-export type OutgoingMessage = Filters | Play | Stop | Seek | Destroy | Volume | Pause | VoiceUpdate | ConfigureResuming | Equalizer;
+export type OutgoingMessage = PlayerOutgoingMessage | ConfigureResuming;
 
+/**
+ * An outgoing player message.
+ */
+export type PlayerOutgoingMessage = Filters | Play | Stop | Seek | Destroy | Volume | VoiceUpdate | Equalizer;
 
 /**
  * Payload for configuring the filters of a player.
@@ -45,20 +56,25 @@ export type OutgoingMessage = Filters | Play | Stop | Seek | Destroy | Volume | 
 export type Filters = PlayerMessage<"filters", Partial<FilterData>>;
 
 export type FilterData = {
-  [Filter.Volume]: VolumeFilter;
-  [Filter.Equalizer]: EqualizerFilter;
-  [Filter.Karaoke]: KaraokeFilter;
-  [Filter.Timescale]: TimescaleFilter;
-  [Filter.Tremolo]: TremoloFilter;
-  [Filter.Vibrato]: VibratoFilter;
-  [Filter.Rotation]: RotationFilter;
-  [Filter.Distortion]: DistortionFilter;
+    [Filter.Volume]: VolumeFilter;
+    [Filter.Equalizer]: EqualizerFilter;
+    [Filter.Karaoke]: KaraokeFilter;
+    [Filter.Timescale]: TimescaleFilter;
+    [Filter.Tremolo]: TremoloFilter;
+    [Filter.Vibrato]: VibratoFilter;
+    [Filter.Rotation]: RotationFilter;
+    [Filter.Distortion]: DistortionFilter;
 }
 
 /**
  * An event related to an audio player.
  */
-export type PlayerEvent = TrackStartEvent | TrackEndEvent | TrackStuckEvent | TrackExceptionEvent | WebSocketClosedEvent;
+export type PlayerEvent =
+    TrackStartEvent
+    | TrackEndEvent
+    | TrackStuckEvent
+    | TrackExceptionEvent
+    | WebSocketClosedEvent;
 
 /**
  * Payload for providing an intercepted voice server & state update
@@ -66,13 +82,13 @@ export type PlayerEvent = TrackStartEvent | TrackEndEvent | TrackStuckEvent | Tr
 export type VoiceUpdate = PlayerMessage<"voiceUpdate", VoiceUpdateData>;
 
 export interface VoiceUpdateData {
-  sessionId: string;
-  event: VoiceServerEvent
+    sessionId: string;
+    event: VoiceServerEvent
 }
 
 export interface VoiceServerEvent {
-  token: string;
-  endpoint: string;
+    token: string;
+    endpoint: string;
 }
 
 /**
@@ -81,12 +97,12 @@ export interface VoiceServerEvent {
 export type Play = PlayerMessage<"play", PlayData>
 
 export interface PlayData {
-  track: string;
-  startTime?: number;
-  endTime?: number;
-  volume?: number;
-  noReplace?: boolean;
-  pause?: boolean;
+    track: string;
+    startTime?: number;
+    endTime?: number;
+    volume?: number;
+    noReplace?: boolean;
+    pause?: boolean;
 }
 
 /**
@@ -96,7 +112,7 @@ export interface PlayData {
 export type Equalizer = PlayerMessage<"equalizer", EqualizerData>;
 
 export interface EqualizerData {
-  bands: EqualizerFilter;
+    bands: EqualizerFilter;
 }
 
 /**
@@ -105,8 +121,8 @@ export interface EqualizerData {
 export type ConfigureResuming = Message<"configureResuming", ConfigureResumingData>;
 
 export interface ConfigureResumingData {
-  key: string;
-  timeout: number;
+    key: string;
+    timeout: number;
 }
 
 /**
@@ -120,7 +136,7 @@ export type Stop = PlayerMessage<"stop">;
 export type Pause = PlayerMessage<"pause", PauseData>;
 
 export interface PauseData {
-  pause: boolean;
+    pause: boolean;
 }
 
 /**
@@ -129,7 +145,7 @@ export interface PauseData {
 export type Seek = PlayerMessage<"seek", SeekData>;
 
 export interface SeekData {
-  position: number;
+    position: number;
 }
 
 /**
@@ -140,7 +156,7 @@ export interface SeekData {
 export type Volume = PlayerMessage<"volume", VolumeData>;
 
 export interface VolumeData {
-  volume: number;
+    volume: number;
 }
 
 /**
@@ -149,30 +165,30 @@ export interface VolumeData {
 export type Stats = Message<"stats", StatsData>
 
 export interface StatsData {
-  /**
-   * The amount of players on the node.
-   */
-  players: number;
-  /**
-   * The amount of players playing on the node.
-   */
-  playingPlayers: number;
-  /**
-   * The duration the node has been up.
-   */
-  uptime: number;
-  /**
-   * The nodes memory stats.
-   */
-  memory: MemoryStats;
-  /**
-   * The nodes CPU stats.
-   */
-  cpu: CPUStats;
-  /**
-   * The nodes frame stats.
-   */
-  frameStats?: FrameStats;
+    /**
+     * The amount of players on the node.
+     */
+    players: number;
+    /**
+     * The amount of players playing on the node.
+     */
+    playingPlayers: number;
+    /**
+     * The duration the node has been up.
+     */
+    uptime: number;
+    /**
+     * The nodes memory stats.
+     */
+    memory: MemoryStats;
+    /**
+     * The nodes CPU stats.
+     */
+    cpu: CPUStats;
+    /**
+     * The nodes frame stats.
+     */
+    frameStats?: FrameStats;
 }
 
 /**

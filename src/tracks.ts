@@ -1,30 +1,30 @@
 import type { FriendlyException } from "./common";
 
 export enum LoadType {
-  /**
-   * A single track was loaded.
-   */
-  TrackLoaded = "TRACK_LOADED",
+    /**
+     * A single track was loaded.
+     */
+    TrackLoaded = "TRACK_LOADED",
 
-  /**
-   * A playlist was loaded.
-   */
-  PlaylistLoaded = "PLAYLIST_LOADED",
+    /**
+     * A playlist was loaded.
+     */
+    PlaylistLoaded = "PLAYLIST_LOADED",
 
-  /**
-   * A search result was made, either with `ytsearch:` or `scsearch:`.
-   */
-  SearchResult = "SEARCH_RESULT",
+    /**
+     * A search result was made, either with `ytsearch:` or `scsearch:`.
+     */
+    SearchResult = "SEARCH_RESULT",
 
-  /**
-   * Nothing was founded for the supplied identifier.
-   */
-  NoMatches = "NO_MATCHES",
+    /**
+     * Nothing was founded for the supplied identifier.
+     */
+    NoMatches = "NO_MATCHES",
 
-  /**
-   * Lavaplayer failed to load something.
-   */
-  LoadFailed = "LOAD_FAILED"
+    /**
+     * Lavaplayer failed to load something.
+     */
+    LoadFailed = "LOAD_FAILED"
 }
 
 /**
@@ -47,7 +47,7 @@ type Response<T extends LoadType, D = {}> = {
  * Parameters required by `GET /loadtracks`
  */
 export interface LoadTracksParameters {
-  identifier: string;
+    identifier: string;
 }
 
 /**
@@ -59,10 +59,10 @@ export type LoadTracksResponse = TrackLoaded | PlaylistLoaded | SearchResult | N
  * Parameters required by `GET /decodetrack`.
  */
 export interface DecodeTrackParameters {
-  /**
-   * Encoded track to decode.
-   */
-  track: EncodedTrack;
+    /**
+     * Encoded track to decode.
+     */
+    track: EncodedTrack;
 }
 
 /**
@@ -81,15 +81,15 @@ export type DecodeTracksRequest = EncodedTrack[];
 export type DecodeTracksResponse = TrackInfo[];
 
 export interface PlaylistInfo {
-  /**
-   * The name of the track.
-   */
-  name: string;
+    /**
+     * The name of the track.
+     */
+    name: string;
 
-  /**
-   *
-   */
-  selectedTrack: number;
+    /**
+     *
+     */
+    selectedTrack: number;
 }
 
 /**
@@ -116,25 +116,25 @@ export type NoMatches = Response<LoadType.NoMatches>;
  * Returned if lavaplayer failed to load something.
  */
 export type LoadFailed = Response<LoadType.LoadFailed, {
-  /**
-   * The exception that was thrown
-   */
-  exception: FriendlyException;
+    /**
+     * The exception that was thrown
+     */
+    exception: FriendlyException;
 }>
 
 export interface Track {
-  track: EncodedTrack;
-  info: TrackInfo;
+    track: EncodedTrack;
+    info: TrackInfo;
 }
 
 export interface TrackInfo {
-  identifier: string;
-  isStream: boolean;
-  isSeekable: boolean;
-  author: string;
-  length: number;
-  position: number;
-  title: string;
-  uri: string;
-  sourceName: string;
+    identifier: string;
+    isStream: boolean;
+    isSeekable: boolean;
+    author: string;
+    length: number;
+    position: number;
+    title: string;
+    uri: string;
+    sourceName: string;
 }

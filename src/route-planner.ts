@@ -1,57 +1,57 @@
 export type RoutePlannerClass =
-  | "RotatingIpRoutePlanner"
-  | "NanoIpRoutePlanner"
-  | "RotatingNanoIpRoutePlanner";
+    | "RotatingIpRoutePlanner"
+    | "NanoIpRoutePlanner"
+    | "RotatingNanoIpRoutePlanner";
 
 /** Base Interfaces */
 export interface IpBlockStats {
-  type: string;
-  size: string;
+    type: string;
+    size: string;
 }
 
 export interface FailingAddress {
-  adress: string;
-  failingTimestamp: number;
-  failingTime: string;
+    adress: string;
+    failingTimestamp: number;
+    failingTime: string;
 }
 
 export interface RoutePlannerStatus {
-  class: RoutePlannerClass | null;
-  details: RoutePlannerDetails | null;
+    class: RoutePlannerClass | null;
+    details: RoutePlannerDetails | null;
 }
 
 export interface RoutePlannerDetails {
-  ipBlock: IpBlockStats;
-  failingAddresses: FailingAddress[];
+    ipBlock: IpBlockStats;
+    failingAddresses: FailingAddress[];
 }
 
 /** Classes */
 
 export type RoutePlanner =
-  | RotatingNanoIpRoutePlanner
-  | NanoIpRoutePlanner
-  | RotatingIpRoutePlanner;
+    | RotatingNanoIpRoutePlanner
+    | NanoIpRoutePlanner
+    | RotatingIpRoutePlanner;
 
 export interface RotatingIpRoutePlanner extends RoutePlannerStatus {
-  class: "RotatingIpRoutePlanner";
-  details: {
-    rotateIndex: string;
-    ipIndex: string;
-    currentAddress: string;
-  } & RoutePlannerDetails;
+    class: "RotatingIpRoutePlanner";
+    details: {
+        rotateIndex: string;
+        ipIndex: string;
+        currentAddress: string;
+    } & RoutePlannerDetails;
 }
 
 export interface NanoIpRoutePlanner extends RoutePlannerStatus {
-  class: "NanoIpRoutePlanner";
-  details: {
-    currentAddressIndex: number;
-  } & RoutePlannerDetails;
+    class: "NanoIpRoutePlanner";
+    details: {
+        currentAddressIndex: number;
+    } & RoutePlannerDetails;
 }
 
 export interface RotatingNanoIpRoutePlanner extends RoutePlannerStatus {
-  class: "RotatingNanoIpRoutePlanner";
-  details: {
-    blockIndex: string;
-    currentAddressIndex: number;
-  } & RoutePlannerDetails;
+    class: "RotatingNanoIpRoutePlanner";
+    details: {
+        blockIndex: string;
+        currentAddressIndex: number;
+    } & RoutePlannerDetails;
 }
