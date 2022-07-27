@@ -5,7 +5,7 @@ export interface Headers {
      *
      * @deprecated This header is no longer required for the dev branch.
      */
-    "Num-Shards": number;
+    "Num-Shards"?: string;
 
     /**
      * The name of your client, optionally in the format NAME/VERSION

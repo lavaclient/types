@@ -4,10 +4,24 @@ tests/
 .idea/
 
 # yarn/npm
-node_modules/
-package-lock.json
+.yarn
 *.lock
+
+node_modules/
 
 # Other
 *.env
 tsconfig.tsbuildinfo
+
+# Build
+/v*.*js
+/v*.*map
+/v*.d.ts
+
+/rest/**/*.*js
+/rest/**/*.*map
+/rest/**/*.d.ts
+
+/payloads/**/*.*js
+/payloads/**/*.*map
+/payloads/**/*.d.ts

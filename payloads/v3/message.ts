@@ -8,10 +8,11 @@ import type {
     WebSocketClosedEvent
 } from "./player";
 import type {
+    ChannelMixFilter,
     DistortionFilter,
     EqualizerFilter,
     Filter,
-    KaraokeFilter,
+    KaraokeFilter, LowPassFilter,
     RotationFilter,
     TimescaleFilter,
     TremoloFilter,
@@ -48,14 +49,14 @@ export type OutgoingMessage = PlayerOutgoingMessage | ConfigureResuming;
 /**
  * An outgoing player message.
  */
-export type PlayerOutgoingMessage = Filters | Play | Stop | Seek | Destroy | Volume | VoiceUpdate | Equalizer;
+export type PlayerOutgoingMessage = VoiceUpdate | Play | Stop | Pause | Seek | Volume | Filters | Destroy | Equalizer;
 
 /**
  * Payload for configuring the filters of a player.
  */
-export type Filters = PlayerMessage<"filters", Partial<FilterData>>;
+export type Filters = PlayerMessage<"filters", FilterData>;
 
-export type FilterData = {
+export type FilterData = Partial<{
     [Filter.Volume]: VolumeFilter;
     [Filter.Equalizer]: EqualizerFilter;
     [Filter.Karaoke]: KaraokeFilter;
@@ -64,13 +65,15 @@ export type FilterData = {
     [Filter.Vibrato]: VibratoFilter;
     [Filter.Rotation]: RotationFilter;
     [Filter.Distortion]: DistortionFilter;
-}
+    [Filter.ChannelMix]: ChannelMixFilter;
+    [Filter.LowPass]: LowPassFilter;
+}>;
 
 /**
  * An event related to an audio player.
  */
 export type PlayerEvent =
-    TrackStartEvent
+    | TrackStartEvent
     | TrackEndEvent
     | TrackStuckEvent
     | TrackExceptionEvent
@@ -107,7 +110,7 @@ export interface PlayData {
 
 /**
  * Configures the equalizer.
- * @deprecated in v4, use the filters api.
+ * @deprecated Removed in lavalink v4, use the filters api.
  */
 export type Equalizer = PlayerMessage<"equalizer", EqualizerData>;
 
@@ -150,8 +153,6 @@ export interface SeekData {
 
 /**
  * Sets the volume of the player.
- *
- * @deprecated This operation will be removed in v4.
  */
 export type Volume = PlayerMessage<"volume", VolumeData>;
 

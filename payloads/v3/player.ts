@@ -3,11 +3,11 @@
  *
  * @see https://github.com/sedmelluq/lavaplayer/blob/master/main/src/main/java/com/sedmelluq/discord/lavaplayer/track/AudioTrackEndReason.java
  */
+import type { TrackHash } from "../../rest/track";
 import type { PlayerMessage } from "./message";
-import type { EncodedTrack } from "./tracks";
 
 export type PlayerEventType =
-    "TrackStartEvent"
+    | "TrackStartEvent"
     | "TrackEndEvent"
     | "TrackExceptionEvent"
     | "TrackStuckEvent"
@@ -51,11 +51,11 @@ export enum TrackEndReason {
  *
  */
 export const mayStartNext: Record<TrackEndReason, boolean> = {
-    [TrackEndReason.Finished]: true,
+    [TrackEndReason.Finished]:   true,
     [TrackEndReason.LoadFailed]: true,
-    [TrackEndReason.Stopped]: false,
-    [TrackEndReason.Replaced]: false,
-    [TrackEndReason.Cleanup]: false,
+    [TrackEndReason.Stopped]:    false,
+    [TrackEndReason.Replaced]:   false,
+    [TrackEndReason.Cleanup]:    false,
 };
 
 type Event<T extends PlayerEventType, D> = PlayerMessage<"event", { type: T } & D>;
@@ -77,7 +77,7 @@ export interface TrackStartEventData {
     /**
      * The track that had started.
      */
-    track: EncodedTrack;
+    track: TrackHash;
 }
 
 /**

@@ -10,7 +10,7 @@ export interface IpBlockStats {
 }
 
 export interface FailingAddress {
-    adress: string;
+    address: string;
     failingTimestamp: number;
     failingTime: string;
 }

@@ -1,14 +1,16 @@
 import type { EqualizerBand } from "./player";
 
 export enum Filter {
-    Volume = "volume",
-    Equalizer = "equalizer",
-    Karaoke = "karaoke",
-    Timescale = "timescale",
-    Tremolo = "tremolo",
-    Vibrato = "vibrato",
-    Rotation = "rotation",
-    Distortion = "distortion"
+    Volume     = "volume",
+    Equalizer  = "equalizer",
+    Karaoke    = "karaoke",
+    Timescale  = "timescale",
+    Tremolo    = "tremolo",
+    Vibrato    = "vibrato",
+    Rotation   = "rotation",
+    Distortion = "distortion",
+    ChannelMix = "channelMix",
+    LowPass    = "lowPass"
 }
 
 /**
@@ -74,3 +76,20 @@ export interface RotationFilter {
 export type DistortionFilter = Record<`${SOHCAHTOA}${"Scale" | "Offset"}` | "offset" | "scale", number>;
 
 type SOHCAHTOA = "tan" | "cos" | "sin";
+
+/**
+ * Mixes both channels (left & right), with a configurable factor on how much each channel affects the other.
+ * With the defaults, both channels are kept independent of each other.
+ * Setting all factors to 0.5 means both channels get the same audio.
+ */
+export type ChannelMixFilter = Record<`${Channel}To${Channel}`, number>;
+
+type Channel = "left" | "right";
+
+/**
+ * Higher frequencies get suppressed while lower frequencies pass through this filter, thus the name low pass.
+ * Any smoothing values equal to, or less than 1.0 will disable the filter.
+ */
+export interface LowPassFilter {
+    smoothing: number;
+}

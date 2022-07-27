@@ -1,4 +1,5 @@
-import type { FriendlyException } from "./common";
+import type { FriendlyException } from "../exception";
+import type { Track, TrackHash, TrackInfo } from "../track";
 
 export enum LoadType {
     /**
@@ -26,13 +27,6 @@ export enum LoadType {
      */
     LoadFailed = "LOAD_FAILED"
 }
-
-/**
- * A base64 encoded track, due to lavalink being developed in java it cannot be decoded "normally".
- *
- * @see https://www.npmjs.com/package/@lavalink/encoding
- */
-export type EncodedTrack = string;
 
 /**
  *
@@ -63,7 +57,7 @@ export interface DecodeTrackParameters {
     /**
      * Encoded track to decode.
      */
-    track: EncodedTrack;
+    track: TrackHash;
 }
 
 /**
@@ -74,7 +68,7 @@ export type DecodeTrackResponse = TrackInfo;
 /**
  * Request body of `POST /decodetracks`.
  */
-export type DecodeTracksRequest = EncodedTrack[];
+export type DecodeTracksRequest = TrackHash[];
 
 /**
  * Response of `POST /decodetracks`.
@@ -122,20 +116,3 @@ export type LoadFailed = Response<LoadType.LoadFailed, {
      */
     exception: FriendlyException;
 }>
-
-export interface Track {
-    track: EncodedTrack;
-    info: TrackInfo;
-}
-
-export interface TrackInfo {
-    identifier: string;
-    isStream: boolean;
-    isSeekable: boolean;
-    author: string;
-    length: number;
-    position: number;
-    title: string;
-    uri: string;
-    sourceName: string;
-}
