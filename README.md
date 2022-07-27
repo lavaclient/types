@@ -4,8 +4,6 @@
 
 <h2 align="center">Installation</h2>
 
----
-
 **Node.js v16** or newer is required.
 
 **Stable**
