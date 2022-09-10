@@ -180,4 +180,9 @@ export interface PlayerUpdateState {
      * Whether the player is connected to a voice channel.
      */
     connected: boolean;
+    
+    /** 
+     * The number of milliseconds between the voice connection heartbeat and Discord acknowledging it. Could be `-1` if not connected.
+     */
+    ping: number;
 }
