@@ -1,6 +1,6 @@
 {
     "name": "@lavaclient/types",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "Typings for lavalink.",
     "homepage": "https://github.com/lavaclient/types#readme",
     "author": "melike2d",
@@ -46,7 +46,7 @@
         }
     },
     "scripts": {
-        "build:node": "tsc && run-p esm:*",
+        "build:node": "tsc && run-p 'esm:*'",
         "build:deno": "node ./scripts/deno.mjs",
         "clean:deno": "rimraf deno",
         "clean:node": "rimraf {payloads,rest}/**/*.{js,mjs,d.ts,*map} {exception,track,v*}.{js,mjs,d.ts,*map}",
